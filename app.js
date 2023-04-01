@@ -9,7 +9,6 @@ const { phoneNumberFormatter } = require('./helpers/formatter');
 const fileUpload = require('express-fileupload');
 const axios = require('axios');
 const mime = require('mime-types');
-const wakeDyno = require("woke-dyno");
 var bodyParser = require('body-parser');
 
 const port = process.env.PORT || 8100;
@@ -28,7 +27,11 @@ app.use(fileUpload({
   debug: true
 }));
 
-app.get('/', (req, res) => {
+app.get('/', function(req, res, next) {
+  res.send('respond with a resource');
+}); 
+
+app.get('/qrcode', (req, res) => {
   res.sendFile('index.html', {
     root: __dirname
   });
@@ -339,7 +342,5 @@ server.listen(port, function() {
   console.log('App running on *: ' + port);
 });
 
-//  server.listen(port, () => {
-//    wakeDyno({url:'https://wpqrcode1.herokuapp.com/',interval: 210000}).start(); // DYNO_URL should be the url of your Heroku app
-//  });
+
 
